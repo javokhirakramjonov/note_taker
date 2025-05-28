@@ -38,6 +38,15 @@ class HomeScreen extends StatelessWidget {
           ],
           actionsPadding: const EdgeInsets.only(right: 16.0),
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xFFE8505B),
+          shape: CircleBorder(),
+          onPressed: () {
+            // TODO go to create note screen
+          },
+          child: Icon(Icons.add, color: Colors.white, size: 42),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: SafeArea(
           child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
             builder: (context, state) {
