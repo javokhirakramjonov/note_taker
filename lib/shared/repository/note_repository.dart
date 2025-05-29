@@ -1,18 +1,21 @@
-import 'package:note_taker/shared/model/note.dart';
+import 'package:note_taker/shared/db/database.dart';
 
 class NoteRepository {
-  final List<Note> notes = List.generate(
-    10,
-    (index) => Note(
-      id: index + 1,
-      title: 'Note ${index + 1}',
-      content: index % 2 == 0
-          ? 'This is the content of note ${index + 1}.'
-          : 'This is a different content for note ${index + 1}. It has some variations to make it interesting. This is a different content for note ${index + 1}. It has some variations to make it interesting.',
-    ),
-  );
+  final NotesDatabase _notesDatabase;
+
+  NoteRepository(this._notesDatabase);
 
   Future<List<Note>> getNotes() async {
-    return notes;
+    return _notesDatabase.getAllNotes();
+  }
+
+  Future<void> saveNote(Note note) async {
+    if (note.id == 0) {
+      await _notesDatabase.insertNote(
+        NotesCompanion.insert(title: note.title, content: note.content),
+      );
+    } else {
+      await _notesDatabase.updateNote(note);
+    }
   }
 }
